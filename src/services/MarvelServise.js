@@ -32,13 +32,20 @@ class MarvelServise {
     }
 
     _transformChar = (char) => {
+        if (char.description.length <= 0) {
+            char.description = 'there is no description for character'
+        }
+        else if (char.description.length > 5) {
+            char.description = char.description.slice(0, 150) + '...'
+        }
         return {
             id: char.id,
             name: char.name,
             description: char.description,
             img: char.thumbnail.path + '.' + char.thumbnail.extension,
             homepage: char.urls[0].url,
-            wiki: char.urls[1].url
+            wiki: char.urls[1].url,
+            comics: char.comics.items
         }
     }
 

@@ -1,5 +1,7 @@
 import {Component} from "react"
 import MarvelServise from "../../services/MarvelServise"
+import Spinner from "../spinner/Spinner"
+import ErrorMessage from "../errorMessage/ErrorMessage"
 
 import './charList.scss';
 //import abyss from '../../resources/img/abyss.jpg';
@@ -16,13 +18,22 @@ class CharList extends Component {
     onCharLoaded = (chars) => {
         this.setState({
             charList: chars,
-            loading: false
+            loading: false,
+            error: false
+        })
+    }
+
+    onError = () => {
+        this.setState({
+            loading: false,
+            error: true
         })
     }
 
     componentDidMount() {
         this.marvelServise.getAllCharacters()
             .then(this.onCharLoaded)
+            .catch(this.onError)
     }
 
     renderItems = (arr) => {
@@ -35,6 +46,7 @@ class CharList extends Component {
             return(
                 <li className="char__item"
                     key={item.id}
+                    onClick={() => (this.props.onSelectedChar(item.id))}
                 >
                     <img src={item.img} alt={item.name} style={imgStyle}/>
                     <div className="char__name">{item.name}</div>
@@ -51,12 +63,16 @@ class CharList extends Component {
 
     render () {
 
-        const {charList, loading} = this.state
-        const items = this.renderItems(charList)
+        const {charList, loading, error} = this.state
+        const loader = loading ? <Spinner /> : null
+        const errors = error ? <ErrorMessage /> : null
+        const items = !(errors || loader) ? this.renderItems(charList) : null
 //        console.log(this.state)
         
         return (
             <div className="char__list">
+                {loader}
+                {errors}
                 {items}
                 {/*
                 <ul className="char__grid">
