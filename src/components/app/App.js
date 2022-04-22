@@ -23,7 +23,7 @@ class App extends Component {
     render() {
         return (
             <div className="app">
-                <AppHeader/>
+                <AppHeader />
                 <main>
                     <RandomChar/>
                     <div className="char__content">

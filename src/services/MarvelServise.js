@@ -15,8 +15,8 @@ class MarvelServise {
         return await res.json() // возвращаем результат запроса и преобразуем в json
     }
 
-    getAllCharacters = async () => {
-        const res = await this.getResource(`${this._url}characters?limit=9&offset=210&${this._key}`) 
+    getAllCharacters = async (offset=210) => {
+        const res = await this.getResource(`${this._url}characters?limit=9&offset=${offset}&${this._key}`) 
 
         return res.data.results.map(char => (this._transformChar(char)))
     }

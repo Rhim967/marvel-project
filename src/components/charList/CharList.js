@@ -10,17 +10,35 @@ class CharList extends Component {
 
     state = {
         charList: [],
-        loading: true
+        loading: true,
+        error: false,
+        newItemsLoading: false,
+        offset: 210
     }
 
     marvelServise = new MarvelServise();
 
-    onCharLoaded = (chars) => {
+    onRequest = (offset) => {
+        this.onCharListLoading()
+        this.marvelServise.getAllCharacters(offset)
+            .then(this.onCharListLoaded)
+            .catch(this.onError)
+    }
+
+    onCharListLoading = () => {
         this.setState({
-            charList: chars,
-            loading: false,
-            error: false
+            newItemsLoading: true
         })
+    }
+
+    onCharListLoaded = (newChars) => {
+        this.setState(({charList, offset}) => ({
+            charList: [...charList, ...newChars],
+            loading: false,
+            error: false,
+            newItemsLoading: false,
+            offset: offset + 9
+        }))
     }
 
     onError = () => {
@@ -31,10 +49,9 @@ class CharList extends Component {
     }
 
     componentDidMount() {
-        this.marvelServise.getAllCharacters()
-            .then(this.onCharLoaded)
-            .catch(this.onError)
+        this.onRequest()
     }
+
 
     renderItems = (arr) => {
         const items = arr.map(item => {
@@ -63,7 +80,7 @@ class CharList extends Component {
 
     render () {
 
-        const {charList, loading, error} = this.state
+        const {charList, loading, error, newItemsLoading, offset} = this.state
         const loader = loading ? <Spinner /> : null
         const errors = error ? <ErrorMessage /> : null
         const items = !(errors || loader) ? this.renderItems(charList) : null
@@ -114,7 +131,11 @@ class CharList extends Component {
                     </li>
                 </ul>
                 */}
-                <button className="button button__main button__long">
+                <button 
+                    className="button button__main button__long"
+                    disabled={newItemsLoading}
+                    onClick={() => this.onRequest(offset)}
+                >
                     <div className="inner">load more</div>
                 </button>
             </div>
