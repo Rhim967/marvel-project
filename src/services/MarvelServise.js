@@ -1,37 +1,39 @@
+import {useHttp} from "../hooks/useHttp.hook"
 
-class MarvelServise {
+const useMarvelServise = () => {
+    const {request, clearError, error, loading} = useHttp()
 
-    _url = 'https://gateway.marvel.com:443/v1/public/'
-    _key = 'apikey=3d56a2e1f1d75d0161f869d6e112745c'
+    const _url = 'https://gateway.marvel.com:443/v1/public/'
+    const _key = 'apikey=3d56a2e1f1d75d0161f869d6e112745c'
 
 
-    getResource = async (url) => { // создаем фун-ю по получению всех персонажей
-        let res = await fetch(url) // запрос данных с сервера
+//    getResource = async (url) => { // создаем фун-ю по получению всех персонажей
+//        let res = await fetch(url) // запрос данных с сервера
+//
+//        if (!res.ok) { // проверяем успешен ли запрос
+//            throw new Error(`Could not fetch ${url}, status: ${res.status}`) // выкидываем ошибку если нет
+//        }
+//            
+//        return await res.json() // возвращаем результат запроса и преобразуем в json
+//    }
 
-        if (!res.ok) { // проверяем успешен ли запрос
-            throw new Error(`Could not fetch ${url}, status: ${res.status}`) // выкидываем ошибку если нет
-        }
-            
-        return await res.json() // возвращаем результат запроса и преобразуем в json
+    const getAllCharacters = async (offset=210) => {
+        const res = await request(`${_url}characters?limit=9&offset=${offset}&${_key}`) 
+
+        return res.data.results.map(char => (_transformChar(char)))
     }
 
-    getAllCharacters = async (offset=210) => {
-        const res = await this.getResource(`${this._url}characters?limit=9&offset=${offset}&${this._key}`) 
-
-        return res.data.results.map(char => (this._transformChar(char)))
-    }
-
-    getCharacter = async (id) => { // функция получения одного персонажа
+    const getCharacter = async (id) => { // функция получения одного персонажа
 
         // записываем отет от сервера в переменную res
-        const res = await this.getResource(`${this._url}characters/${id}?${this._key}`)
+        const res = await request(`${_url}characters/${id}?${_key}`)
 
         // трансформируем данные от сервера и возвращаем удобный объект
-        return this._transformChar(res.data.results[0])
+        return _transformChar(res.data.results[0])
 
     }
 
-    _transformChar = (char) => {
+    const _transformChar = (char) => {
         if (char.description.length <= 0) {
             char.description = 'there is no description for character'
         }
@@ -40,7 +42,7 @@ class MarvelServise {
         }
         return {
             id: char.id,
-            name: char.name,
+            nameChr: char.name,
             description: char.description,
             img: char.thumbnail.path + '.' + char.thumbnail.extension,
             homepage: char.urls[0].url,
@@ -49,7 +51,8 @@ class MarvelServise {
         }
     }
 
+    return {error, loading, clearError, getAllCharacters, getCharacter}
 }
 
 
-export default MarvelServise
+export default useMarvelServise
