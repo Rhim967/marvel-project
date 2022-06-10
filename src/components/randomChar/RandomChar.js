@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import useMarvelServise from "../../services/MarvelServise"
 import Spinner from "../spinner/Spinner"
 import ErrorMessage from "../errorMessage/ErrorMessage"
@@ -33,26 +33,16 @@ const View = ({char}) => {
 
 const RandomChar = () => {
 
-//    state = {
-//        char: {},
-//        loader: true
-//    }
-
     const [char, setChar] = useState('')
     const {loading, error, clearError, getCharacter} = useMarvelServise();
 
+    useEffect(() => {
+        getChar()
+    }, [])
 
     const updChar = (char) => {
         setChar(char)
     }
-
-//    onError = () => {
-//        this.setState({
-//            loader: false,
-//            error: true
-//        })
-//        console.log('there is an error...')
-//    }
 
     const getChar = () => {
         clearError()
