@@ -1,6 +1,10 @@
 @import '../../style/variables.scss';
 
 .char {
+    &__list{
+        height: 600px;
+        overflow-y: scroll;
+    }
     &__content {
         margin-top: 50px;
         display: grid;

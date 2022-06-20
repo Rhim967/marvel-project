@@ -27,6 +27,8 @@ const CharList = (props) => {
 
     const onCharListLoaded = (newChars) => {
 
+        clearError()
+
         let charEnd = false
         if (newChars.length < 9) {
             charEnd = true
@@ -62,8 +64,8 @@ const CharList = (props) => {
                         focusOnItem(i)
                     }}
                 >
-                    <img src={item.img} alt={item.name} style={imgStyle}/>
-                    <div className="char__name">{item.name}</div>
+                    <img src={item.img} alt={item.nameChr} style={imgStyle}/>
+                    <div className="char__name">{item.nameChr}</div>
                 </li>
             )
         })
@@ -82,9 +84,9 @@ const CharList = (props) => {
         
         return (
             <div className="char__list">
-                {spinner}
                 {errors}
                 {items}
+                {spinner}
                 {/*
                 <ul className="char__grid">
                     <li className="char__item">

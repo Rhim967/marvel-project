@@ -1,4 +1,4 @@
-import {Component} from "react"
+import { useState } from "react"
 
 import AppHeader from "../appHeader/AppHeader";
 import RandomChar from "../randomChar/RandomChar";
@@ -6,40 +6,41 @@ import CharList from "../charList/CharList";
 import CharInfo from "../charInfo/CharInfo";
 import ErrorBoundary from "../errorBoundary/ErrorBoundary"
 
+import "./app.scss"
 import decoration from '../../resources/img/vision.png';
 
-class App extends Component {
+const App = () => {
 
-    state = {
-        selectedChar: null
+    const [selectedChar, setSelectedChar] = useState(null)
+
+
+    const onSelectedChar = (id) => {
+        setSelectedChar(id)
     }
 
-    onSelectedChar = (id) => {
-        this.setState({
-            selectedChar: id
-        })
-    }
+    return (
+        <div className="app">
+            <AppHeader />
 
-    render() {
-        return (
-            <div className="app">
-                <AppHeader />
-                <main>
+            <main>
+                <ErrorBoundary >
                     <RandomChar/>
-                    <div className="char__content">
-                        <CharList onSelectedChar={this.onSelectedChar}/>
+                </ErrorBoundary >
 
-                    {/*
-                        <ErrorBoundary >
-                            <CharInfo charId={this.state.selectedChar}/>
-                        </ErrorBoundary>
-                    */}
-                    </div>
-                    <img className="bg-decoration" src={decoration} alt="vision"/>
-                </main>
-            </div>
-        )
-    }
+                <div className="char__content">
+                    <ErrorBoundary >
+                        <CharList onSelectedChar={onSelectedChar}/>
+                    </ErrorBoundary>
+
+                    <ErrorBoundary >
+                        <CharInfo charId={selectedChar}/>
+                    </ErrorBoundary>
+                </div>
+
+                <img className="bg-decoration" src={decoration} alt="vision"/>
+            </main>
+        </div>
+    )
 
 }
 
