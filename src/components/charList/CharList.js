@@ -128,8 +128,8 @@ const CharList = (props) => {
                 </ul>
                 */}
                 <button 
-                    className="button button__main button__long"
-                    disabled={newItemsLoading}
+                    className={`button ${(newItemsLoading || ended) ? 'button__secondary' : 'button__main'} button__long`}
+                    disabled={newItemsLoading || ended}
                     onClick={() => onRequest(offset)}
                 >
                     <div className="inner">load more</div>

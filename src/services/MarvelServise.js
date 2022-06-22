@@ -6,7 +6,6 @@ const useMarvelServise = () => {
     const _url = 'https://gateway.marvel.com:443/v1/public/'
     const _key = 'apikey=3d56a2e1f1d75d0161f869d6e112745c'
 
-
 //    getResource = async (url) => { // создаем фун-ю по получению всех персонажей
 //        let res = await fetch(url) // запрос данных с сервера
 //
@@ -51,7 +50,35 @@ const useMarvelServise = () => {
         }
     }
 
-    return {error, loading, clearError, getAllCharacters, getCharacter}
+
+    // for comics
+    
+    const getAllComics = async (offset=210) => {
+        const res = await request(`${_url}comics?limit=8&offset=${offset}&${_key}`) 
+
+        return res.data.results.map(com => (_transformComic(com)))
+    }
+
+    const _transformComic = (cmc) => {
+
+//        if (cmc.description.length <= 0) {
+//            cmc.description = 'there is no description for cmcacter'
+//        }
+//        else if (cmc.description.length > 5) {
+//            cmc.description = cmc.description.slice(0, 150) + '...'
+//        }
+        return {
+            id: cmc.id,
+            title: cmc.title,
+            description: cmc.description,
+            price: cmc.prices[0].price,
+            img: cmc.thumbnail.path + '.' + cmc.thumbnail.extension
+        }
+    }
+
+
+    return {error, loading, clearError, getAllCharacters, getCharacter, getAllComics}
+
 }
 
 
