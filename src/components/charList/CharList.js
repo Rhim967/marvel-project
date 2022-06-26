@@ -78,64 +78,65 @@ const CharList = (props) => {
     }
 
 
-        const spinner = loading ? <Spinner /> : null
-        const errors = error ? <ErrorMessage /> : null
-        const items = renderItems(charList)
+    const spinner = loading ? <Spinner /> : null
+    const errors = error ? <ErrorMessage /> : null
+    const items = renderItems(charList)
+
         
-        return (
-            <div className="char__list">
-                {errors}
-                {items}
-                {spinner}
-                {/*
-                <ul className="char__grid">
-                    <li className="char__item">
-                        <img src={abyss} alt="abyss"/>
-                        <div className="char__name">Abyss</div>
-                    </li>
-                    <li className="char__item char__item_selected">
-                        <img src={abyss} alt="abyss"/>
-                        <div className="char__name">Abyss</div>
-                    </li>
-                    <li className="char__item">
-                        <img src={abyss} alt="abyss"/>
-                        <div className="char__name">Abyss</div>
-                    </li>
-                    <li className="char__item">
-                        <img src={abyss} alt="abyss"/>
-                        <div className="char__name">Abyss</div>
-                    </li>
-                    <li className="char__item">
-                        <img src={abyss} alt="abyss"/>
-                        <div className="char__name">Abyss</div>
-                    </li>
-                    <li className="char__item">
-                        <img src={abyss} alt="abyss"/>
-                        <div className="char__name">Abyss</div>
-                    </li>
-                    <li className="char__item">
-                        <img src={abyss} alt="abyss"/>
-                        <div className="char__name">Abyss</div>
-                    </li>
-                    <li className="char__item">
-                        <img src={abyss} alt="abyss"/>
-                        <div className="char__name">Abyss</div>
-                    </li>
-                    <li className="char__item">
-                        <img src={abyss} alt="abyss"/>
-                        <div className="char__name">Abyss</div>
-                    </li>
-                </ul>
-                */}
-                <button 
-                    className={`button ${(newItemsLoading || ended) ? 'button__secondary' : 'button__main'} button__long`}
-                    disabled={newItemsLoading || ended}
-                    onClick={() => onRequest(offset)}
-                >
-                    <div className="inner">load more</div>
-                </button>
-            </div>
-        )
+    return (
+        <div className="char__list">
+            {errors}
+            {items}
+            {spinner}
+            {/*
+            <ul className="char__grid">
+                <li className="char__item">
+                    <img src={abyss} alt="abyss"/>
+                    <div className="char__name">Abyss</div>
+                </li>
+                <li className="char__item char__item_selected">
+                    <img src={abyss} alt="abyss"/>
+                    <div className="char__name">Abyss</div>
+                </li>
+                <li className="char__item">
+                    <img src={abyss} alt="abyss"/>
+                    <div className="char__name">Abyss</div>
+                </li>
+                <li className="char__item">
+                    <img src={abyss} alt="abyss"/>
+                    <div className="char__name">Abyss</div>
+                </li>
+                <li className="char__item">
+                    <img src={abyss} alt="abyss"/>
+                    <div className="char__name">Abyss</div>
+                </li>
+                <li className="char__item">
+                    <img src={abyss} alt="abyss"/>
+                    <div className="char__name">Abyss</div>
+                </li>
+                <li className="char__item">
+                    <img src={abyss} alt="abyss"/>
+                    <div className="char__name">Abyss</div>
+                </li>
+                <li className="char__item">
+                    <img src={abyss} alt="abyss"/>
+                    <div className="char__name">Abyss</div>
+                </li>
+                <li className="char__item">
+                    <img src={abyss} alt="abyss"/>
+                    <div className="char__name">Abyss</div>
+                </li>
+            </ul>
+            */}
+            <button 
+                className={`button ${(newItemsLoading || ended) ? 'button__secondary' : 'button__main'} button__long`}
+                disabled={newItemsLoading || ended}
+                onClick={() => onRequest(offset)}
+            >
+                <div className="inner">load more</div>
+            </button>
+        </div>
+    )
 }
 
 export default CharList;
