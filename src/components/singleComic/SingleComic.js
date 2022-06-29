@@ -1,8 +1,16 @@
+import {Link, useParams} from 'react-router-dom'
+
 import './singleComic.scss';
 import xMen from '../../resources/img/x-men.png';
 
 const SingleComic = () => {
+
+    const { comicId } = useParams()
+
+    console.log(comicId)
+
     return (
+        <>
         <div className="single-comic">
             <img src={xMen} alt="x-men" className="single-comic__img"/>
             <div className="single-comic__info">
@@ -12,8 +20,9 @@ const SingleComic = () => {
                 <p className="single-comic__descr">Language: en-us</p>
                 <div className="single-comic__price">9.99$</div>
             </div>
-            <a href="#" className="single-comic__back">Back to all</a>
+            <Link to=".." className="single-comic__back">Back to all</Link>
         </div>
+        </>
     )
 }
 

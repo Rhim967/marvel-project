@@ -59,6 +59,11 @@ const useMarvelServise = () => {
         return res.data.results.map(com => (_transformComic(com)))
     }
 
+    const getComic = async (id) => {
+        const res = await request(`${_url}comics/${id}?${_key}`)
+        return _transformComic(res.data.results[0])
+    }
+
     const _transformComic = (cmc) => {
 
 //        if (cmc.description.length <= 0) {
@@ -72,7 +77,7 @@ const useMarvelServise = () => {
             title: cmc.title,
             description: cmc.description,
             price: cmc.prices[0].price,
-            img: cmc.thumbnail.path + '.' + cmc.thumbnail.extension
+            img: `${cmc.thumbnail.path}.${cmc.thumbnail.extension}` 
         }
     }
 

@@ -1,7 +1,8 @@
-import { BrowserRouter as Router, Route, Routes, Outlet } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 
 import AppHeader from "../appHeader/AppHeader";
-import {MainPage, ComicsPage} from '../pages'
+import {MainPage, ComicsPage, ComicLayout} from '../pages'
+import SingleComic from '../singleComic/SingleComic'
 
 import "./app.scss"
 
@@ -12,14 +13,14 @@ const App = () => {
         <Router>
             <div className="app">
                 <AppHeader />
-                <main>
-                    <Routes>
-                        <Route path='/' element={<MainPage />} />
-                        <Route path='/comics' element={<ComicsPage />} />
-                    </Routes>
 
-                    <Outlet/>
-                </main>
+                <Routes>
+                    <Route path='/' element={<MainPage />} />
+                    <Route path='comics' element={<ComicLayout />} >
+                        <Route index element={<ComicsPage />} />
+                        <Route path=':comicId' element={<SingleComic />} />
+                    </Route>
+                </Routes>
             </div>
         </Router>
     )

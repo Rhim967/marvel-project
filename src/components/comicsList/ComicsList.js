@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import {NavLink} from 'react-router-dom'
 import MarvelServise from '../../services/MarvelServise'
 import Spinner from "../spinner/Spinner"
 import ErrorMessage from "../errorMessage/ErrorMessage"
@@ -49,11 +50,11 @@ const ComicsList = () => {
     const com = comics.map((item, i) => {
         return(
             <li key={i} className="comics__item">
-                <a href="#">
+                <NavLink end to={`${item.id}`}>
                     <img src={`${item.img}`} alt="ultimate war" className="comics__item-img"/>
                     <div className="comics__item-name">{item.title}</div>
                     <div className="comics__item-price">{item.price} $</div>
-                </a>
+                </NavLink>
             </li>
         )
     })
@@ -66,11 +67,12 @@ const ComicsList = () => {
     // rendering page
     return (
         <div className="comics__list">
-            <ul className="comics__grid">
-                {com}
                 {spinner}
                 {errors}
+            <ul className="comics__grid">
+                {com}
 
+            
                 {/* 
                 <li className="comics__item">
                     <a href="#">
